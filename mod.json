@@ -1,0 +1,54 @@
+{
+	"geode": "4.0.1",
+	"gd": {
+		"win": "2.2074",
+		"mac": "2.2074",
+		"android": "2.2074"
+	},
+	"id": "raydeeux.yearnfulpracticemode",
+	"name": "YearnfulPracticeMode",
+	"version": "v1.0.0",
+	"developer": "RayDeeUx",
+	"description": "Enables Practice Mode on player death.",
+	"repository": "https://github.com/RayDeeUx/YearnfulPracticeMode",
+	"settings": {
+		"enabled": {
+			"name": "Enabled",
+			"description": "Toggles the mod.",
+			"type": "bool",
+			"default": true
+		},
+		"checkpointDelay": {
+			"name": "Checkpoint Delay",
+			"description": "Adjust the checkpoint delay when flying as a ship, swing, wave, or UFO.\n\n<cy>What's the unit of measurement, you ask?</c>\n<cr>Trust me, I wish I knew. At first, I thought it was measured in seconds, but it wasn't, and at this point I can't be bothered to figure it out.</c>\n\n<cr>Just try not to bring CBF into the mix, I guess... (\"._.</c>",
+			"type": "float",
+			"default": 1.5,
+			"min": 1.5,
+			"max": 60.0,
+			"control" : {
+				"input": true,
+				"slider": true,
+				"arrows": true,
+				"big-arrows": true,
+				"arrow-step": 1,
+				"big-arrow-step": 5,
+				"slider-step": 0.01
+			}
+		}
+	},
+	"resources": {
+		"spritesheets": {
+			"RequiringSpritesheetsForASinglePNGSpriteFileIsUnfathomablyCringeIfYouAskMe": [
+				"resources/checkpointLogo.png"
+			]
+		}
+	},
+	"issues": {
+		"url": "https://discord.com/channels/911701438269386882/1205523212444639292",
+		"info": "Ping me <cl>(@erymanthus)</c> in the Geode SDK Discord server's <cl>#help</c> channel if you need help. <cr>DMs are NOT accepted.</c>"
+	},
+	"links": {
+		"community": "https://discord.gg/WqZBYdBWZW",
+		"homepage": "https://discord.com/channels/822510988409831486/1206371881222144020"
+	}
+}
