@@ -12,7 +12,9 @@ add_library(${PROJECT_NAME} SHARED
     src/Manager.hpp
     src/Utils.cpp
     src/Utils.hpp
+    src/EndLevelLayer.cpp
     src/PlayerObject.cpp
+    src/PauseLayer.cpp
     # Add any extra C++ source files here
 )
 
