@@ -14,13 +14,13 @@
 	"settings": {
 		"enabled": {
 			"name": "Enabled",
-			"description": "Toggles the mod.",
+			"description": "Toggles the mod.\n\n<cy>If Node IDs is installed, mod settings button shortcuts will still appear.</c>",
 			"type": "bool",
 			"default": true
 		},
 		"checkpointDelay": {
 			"name": "Checkpoint Delay",
-			"description": "Adjust the checkpoint delay when flying as a ship, swing, wave, or UFO.\n\n<cy>What's the unit of measurement, you ask?</c>\n<cr>Trust me, I wish I knew. At first, I thought it was measured in seconds, but it wasn't, and at this point I can't be bothered to figure it out.</c>\n\n<cr>Just try not to bring CBF into the mix, I guess... (\"._.</c>",
+			"description": "Adjust the <cg>checkpoint</c> <cj>placement delay</c> when flying as a <cl>ship</c>, <cl>swing</c>, <cl>wave</c>, or <cl>UFO</c>.\n\n<cy>What's the unit of measurement, you ask?</c>\n<cr>Trust me, I wish I knew. At first, I thought it was measured in seconds, but it wasn't, and at this point I can't be bothered to figure it out.</c>\n\n<cr>Just try not to bring CBF into the mix, I guess... (\"._.</c>",
 			"type": "float",
 			"default": 1.5,
 			"min": 1.5,
@@ -37,6 +37,12 @@
 		},
 		"hideInNormalMode": {
 			"name": "Hide Checkpoints in Normal Mode",
+			"type": "bool",
+			"default": true
+		},
+		"autoPracticeMode": {
+			"name": "Auto Practice Mode on Death",
+			"description": "Automatically enable <cg>Practice Mode</c> on player death.\n\n<cy>If this is disabled,</c> <cj>all</c> <cg>placed checkpoints</c> <cy>will be</c> <cr>deleted</c> <cy>before</c> <co>restarting</c> <cy>the level.</c>",
 			"type": "bool",
 			"default": true
 		}
