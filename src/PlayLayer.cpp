@@ -15,12 +15,4 @@ class $modify(MyPlayLayer, PlayLayer) {
 			}
 		}
 	}
-	CheckpointObject* markCheckpoint() {
-		auto ret = PlayLayer::markCheckpoint();
-		if (m_isPracticeMode || m_isTestMode || !isEnabled) return ret;
-		if (Mod::get()->getSettingValue<bool>("hideInNormalMode")) {
-			ret->m_physicalCheckpointObject->setVisible(false);
-		}
-		return ret;
-	}
 };
