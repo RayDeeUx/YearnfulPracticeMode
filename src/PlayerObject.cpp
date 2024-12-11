@@ -1,6 +1,8 @@
 #include <Geode/modify/PlayerObject.hpp>
 
 #define isEnabled Mod::get()->getSettingValue<bool>("enabled")
+#define hideInNormalMode Mod::get()->getSettingValue<bool>("hideInNormalMode")
+#define autoPracticeMode Mod::get()->getSettingValue<bool>("autoPracticeMode")
 
 using namespace geode::prelude;
 
@@ -20,7 +22,8 @@ class $modify(MyPlayerObject, PlayerObject) {
 		const auto pl = PlayLayer::get();
 		if (!pl || !isEnabled || this->m_isDead) return MyPlayerObject::resetTimer();
 		if (pl->m_isPracticeMode || pl->m_isTestMode || !m_fields->canCheckpointNow || this != pl->m_player1 || this->isFlyingAndYearning() || this->m_isSpider) return;
-		pl->markCheckpoint();
+		CheckpointObject* checkpoint = pl->markCheckpoint();
+		if (hideInNormalMode) checkpoint->m_physicalCheckpointObject->setVisible(false);
 		m_fields->canCheckpointNow = false;
 	}
 	void incrementJumps() {
@@ -35,6 +38,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 		const auto pl = PlayLayer::get();
 		if (!pl || !isEnabled) return MyPlayerObject::resetTimer();
 		if (pl->m_isPracticeMode || pl->m_isTestMode || (this != pl->m_player1 && this != pl->m_player2)) return;
+		if (!autoPracticeMode) return pl->removeAllCheckpoints();
 		pl->togglePracticeMode(true);
 		if (pl->m_currentCheckpoint) pl->loadFromCheckpoint(pl->m_currentCheckpoint);
 	}
@@ -45,7 +49,8 @@ class $modify(MyPlayerObject, PlayerObject) {
 		if (pl->m_isPracticeMode || pl->m_isTestMode || (this != pl->m_player1 && this != pl->m_player2) || (!this->isFlyingAndYearning() && !this->m_isSpider)) return;
 		this->m_fields->yearningLastCheckpointTime += dt;
 		if (this->m_fields->yearningLastCheckpointTime < (Mod::get()->getSettingValue<double>("checkpointDelay") * 10)) return;
-		pl->markCheckpoint();
+		CheckpointObject* checkpoint = pl->markCheckpoint();
+		if (hideInNormalMode) checkpoint->m_physicalCheckpointObject->setVisible(false);
 		this->m_fields->yearningLastCheckpointTime = 0.0;
 	}
 };
