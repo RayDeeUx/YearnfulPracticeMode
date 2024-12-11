@@ -15,7 +15,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 		return m_isShip || m_isBird || m_isDart || m_isSwing;
 	}
 	void resetTimer() {
-		if (m_fields) m_fields->yearningLastCheckpointTime = 0.0;
+		m_fields->yearningLastCheckpointTime = 0.0;
 	}
 	void hitGround(GameObject* object, bool unknown) {
 		PlayerObject::hitGround(object, unknown);
@@ -44,7 +44,6 @@ class $modify(MyPlayerObject, PlayerObject) {
 	}
 	void update(float dt) {
 		PlayerObject::update(dt);
-		if (!m_fields) return;
 		const auto pl = PlayLayer::get();
 		if (!pl || !isEnabled || this->m_isDead) return MyPlayerObject::resetTimer();
 		if (pl->m_isPracticeMode || pl->m_isTestMode || (this != pl->m_player1 && this != pl->m_player2) || (!this->isFlyingAndYearning() && !this->m_isSpider)) return;
