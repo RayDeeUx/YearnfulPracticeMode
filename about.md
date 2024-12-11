@@ -5,6 +5,6 @@ Places <cj>Practice Mode</c> <c-00FF00>checkpoints</c> during <cg>Normal Mode</c
 
 <cy>The "Auto-Checkpoints" vanilla in-game setting is not required for this mod.</c>
 
-Mod idea suggested by [Luka tv](<https://discord.com/users/267009887190384651>).
+Mod idea suggested by [Luka tv](<https://lukatv.lol>).
 
 This [Geode mod](https://geode-sdk.org) is licensed under LGPLv2. To report bugs or get help with using my mods, press the Discord button in the lower left corner.

@@ -34,6 +34,11 @@
 				"big-arrow-step": 5,
 				"slider-step": 0.01
 			}
+		},
+		"hideInNormalMode": {
+			"name": "Hide Checkpoints in Normal Mode",
+			"type": "bool",
+			"default": true
 		}
 	},
 	"resources": {

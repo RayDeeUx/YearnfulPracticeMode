@@ -15,6 +15,7 @@ add_library(${PROJECT_NAME} SHARED
     src/EndLevelLayer.cpp
     src/PlayerObject.cpp
     src/PauseLayer.cpp
+    src/PlayLayer.cpp
     # Add any extra C++ source files here
 )
 
