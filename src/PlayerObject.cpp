@@ -39,7 +39,12 @@ class $modify(MyPlayerObject, PlayerObject) {
 		if (!m_gameLayer || m_gameLayer->m_isEditor || !isEnabled) return MyPlayerObject::resetTimer();
 		PlayLayer* playLayer = static_cast<PlayLayer*>(m_gameLayer);
 		if (playLayer->m_isPracticeMode || playLayer->m_isTestMode || (this != playLayer->m_player1 && this != playLayer->m_player2)) return;
-		if (!autoPracticeMode && playLayer->m_checkpointArray && playLayer->m_checkpointArray->count() > 0) return playLayer->removeAllCheckpoints();
+		if (!autoPracticeMode && playLayer->m_checkpointArray && playLayer->m_checkpointArray->count() > 0) {
+			Manager::get()->isFromPlayerObjectHook = true;
+			playLayer->removeAllCheckpoints();
+			Manager::get()->isFromPlayerObjectHook = false;
+			return;
+		}
 		playLayer->togglePracticeMode(true);
 		if (playLayer->m_currentCheckpoint) playLayer->loadFromCheckpoint(playLayer->m_currentCheckpoint);
 	}

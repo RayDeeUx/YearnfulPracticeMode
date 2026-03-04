@@ -16,6 +16,10 @@ public:
 	bool enabled = false;
 	bool hideInNormalMode = false;
 	bool autoPracticeMode = false;
+	bool mimicADOFAIPrcMd = false;
+
+	bool isFromPlayerObjectHook = false;
+	std::vector<CheckpointObject*> checkpointObjects;
 
 	static Manager* get() {
 		if (!instance) instance = new Manager();
@@ -38,6 +42,11 @@ public:
 		manager->autoPracticeMode = geode::Mod::get()->getSettingValue<bool>("autoPracticeMode");
 		listenForSettingChanges<bool>("autoPracticeMode", [](const bool autoPracticeModeNew) {
 			Manager::get()->autoPracticeMode = autoPracticeModeNew;
+		});
+
+		manager->mimicADOFAIPrcMd = geode::Mod::get()->getSettingValue<bool>("mimicADOFAIPrcMd");
+		listenForSettingChanges<bool>("mimicADOFAIPrcMd", [](const bool mimicADOFAIPrcMdNew) {
+			Manager::get()->mimicADOFAIPrcMd = mimicADOFAIPrcMdNew;
 		});
 	}
 };

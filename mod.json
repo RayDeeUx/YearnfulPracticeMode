@@ -41,6 +41,11 @@
 			"type": "bool",
 			"default": true
 		},
+		"mimicADOFAIPrcMd": {
+			"name": "Mimic ADOFAI's Checkpoint System",
+			"type": "bool",
+			"default": true
+		},
 		"autoPracticeMode": {
 			"name": "Auto Practice Mode on Death",
 			"description": "Automatically enable <cg>Practice Mode</c> on player death.\n\n<cy>If this is disabled,</c> <cj>all</c> <cg>placed checkpoints</c> <cy>will be</c> <cr>deleted</c> <cy>before</c> <co>restarting</c> <cy>the level.</c>",
