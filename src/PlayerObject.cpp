@@ -4,6 +4,7 @@
 #define isEnabled Manager::get()->enabled
 #define hideInNormalMode Manager::get()->hideInNormalMode
 #define autoPracticeMode Manager::get()->autoPracticeMode
+#define checkpointDelay Manager::get()->checkpointDelay
 
 using namespace geode::prelude;
 
@@ -53,7 +54,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 		PlayLayer* playLayer = static_cast<PlayLayer*>(m_gameLayer);
 		if (playLayer->m_isPracticeMode || playLayer->m_isTestMode || (this != playLayer->m_player1 && this != playLayer->m_player2) || (!this->isFlyingAndYearning() && !m_isSpider)) return;
 		m_fields->yearningLastCheckpointTime += dt;
-		if (m_fields->yearningLastCheckpointTime < (Mod::get()->getSettingValue<double>("checkpointDelay") * 10)) return;
+		if (m_fields->yearningLastCheckpointTime < (checkpointDelay * 10)) return;
 		CheckpointObject* checkpoint = playLayer->markCheckpoint();
 		if (hideInNormalMode) checkpoint->m_physicalCheckpointObject->setVisible(false);
 		m_fields->yearningLastCheckpointTime = 0.0;

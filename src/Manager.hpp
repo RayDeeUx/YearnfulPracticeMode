@@ -18,6 +18,8 @@ public:
 	bool autoPracticeMode = false;
 	bool mimicADOFAIPrcMd = false;
 
+	double checkpointDelay = 0.;
+
 	bool isFromPlayerObjectHook = false;
 	std::vector<geode::Ref<CheckpointObject>> checkpointObjects;
 
@@ -48,5 +50,10 @@ public:
 		listenForSettingChanges<bool>("mimicADOFAIPrcMd", [](const bool mimicADOFAIPrcMdNew) {
 			Manager::get()->mimicADOFAIPrcMd = mimicADOFAIPrcMdNew;
 		});
+
+		manager->checkpointDelay = std::clamp<double>(geode::Mod::get()->getSettingValue<double>("checkpointDelay"), 1.5, 60.);
+		listenForSettingChanges<double>("checkpointDelay", [](const double checkpointDelayNew) {
+			Manager::get()->checkpointDelay = std::clamp<double>(checkpointDelayNew, 1.5, 60.);
+		});	
 	}
 };
