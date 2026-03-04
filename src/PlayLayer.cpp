@@ -1,4 +1,5 @@
 #include <Geode/modify/PlayLayer.hpp>
+#include "Manager.hpp"
 
 #define isEnabled Manager::get()->enabled
 
