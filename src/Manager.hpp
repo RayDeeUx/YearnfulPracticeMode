@@ -19,7 +19,7 @@ public:
 	bool mimicADOFAIPrcMd = false;
 
 	bool isFromPlayerObjectHook = false;
-	std::vector<CheckpointObject*> checkpointObjects;
+	std::vector<geode::Ref<CheckpointObject*>> checkpointObjects;
 
 	static Manager* get() {
 		if (!instance) instance = new Manager();
