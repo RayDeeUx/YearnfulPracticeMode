@@ -19,8 +19,8 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (!togglingOffPracticeModeManually && !m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && m_checkpointArray && m_checkpointArray->count() > 0) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
-					Manager::get()->checkpointObjects.push_back(geode::Ref(checkpoint));
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					Manager::get()->checkpointObjects.push_back(geode::Ref(checkpoint));
 				}
 			}
 		}
@@ -31,8 +31,8 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
-					PlayLayer::storeCheckpoint(checkpoint);
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					PlayLayer::storeCheckpoint(checkpoint);
 				}
 			}
 			Manager::get()->isFromPlayerObjectHook = false;
@@ -70,7 +70,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
 		if (isMimicADOFAIPrcMd && targetCheckpoint) { 
 			m_currentCheckpoint = targetCheckpoint;
-			PlayLayer::loadFromCheckpoint(m_currentCheckpoint);
+			PlayLayer::loadFromCheckpoint(targetCheckpoint);
 		}
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 			if (checkpoint && checkpoint->m_physicalCheckpointObject && !checkpoint->m_physicalCheckpointObject->isVisible()) {
