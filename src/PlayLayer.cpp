@@ -30,8 +30,8 @@ class $modify(MyPlayLayer, PlayLayer) {
 					PlayLayer::storeCheckpoint(checkpoint);
 				}
 			}
+			Manager::get()->checkpointObjects.clear();
 		}
-		Manager::get()->checkpointObjects.empty();
 	}
 	void playEndAnimationToPos(cocos2d::CCPoint position) {
 		if (!m_isPracticeMode && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) PlayLayer::removeAllCheckpoints();
