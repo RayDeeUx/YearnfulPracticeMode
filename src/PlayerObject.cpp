@@ -46,7 +46,6 @@ class $modify(MyPlayerObject, PlayerObject) {
 			return;
 		}
 		playLayer->togglePracticeMode(true);
-		if (playLayer->m_currentCheckpoint) playLayer->loadFromCheckpoint(playLayer->m_currentCheckpoint);
 	}
 	void update(float dt) {
 		PlayerObject::update(dt);

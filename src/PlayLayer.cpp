@@ -74,7 +74,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 			if (checkpoint && checkpoint->m_physicalCheckpointObject && !checkpoint->m_physicalCheckpointObject->isVisible()) {
-				checkpoint->m_physicalCheckpointObject->setVisible(true);
+				checkpoint->m_physicalCheckpointObject->setVisible(status);
 			}
 		}
 	}
