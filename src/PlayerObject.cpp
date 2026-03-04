@@ -35,7 +35,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 		PlayerObject::playerDestroyed(otherPlayer);
 		if (!m_playLayer || !isEnabled) return MyPlayerObject::resetTimer();
 		if (m_playLayer->m_isPracticeMode || m_playLayer->m_isTestMode || (this != m_playLayer->m_player1 && this != m_playLayer->m_player2)) return;
-		if (!autoPracticeMode && m_playLayer->m_checkpointArray && m_playLayer->m_checkpointArray->getChildrenCount() > 0) return m_playLayer->removeAllCheckpoints();
+		if (!autoPracticeMode && m_playLayer->m_checkpointArray && m_playLayer->m_checkpointArray->count() > 0) return m_playLayer->removeAllCheckpoints();
 		m_playLayer->togglePracticeMode(true);
 		if (m_playLayer->m_currentCheckpoint) m_playLayer->loadFromCheckpoint(m_playLayer->m_currentCheckpoint);
 	}
