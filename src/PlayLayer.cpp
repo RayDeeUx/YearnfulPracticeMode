@@ -58,16 +58,20 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::removeCheckpoint(first);
 	}
 	void togglePracticeMode(bool status) {
-		if (status && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) {
+		CheckpointObject* targetCheckpoint = nullptr;
+		if (status && isEnabled && isMimicADOFAIPrcMd && m_checkpointArray && m_checkpointArray->count() > 0) {
 			if (CheckpointObject* checkedCheckpoint = static_cast<CheckpointObject*>(m_checkpointArray->objectAtIndex(m_checkpointArray->count() - 1)); checkedCheckpoint && isMimicADOFAIPrcMd) {
-				m_currentCheckpoint = checkedCheckpoint;
+				targetCheckpoint = checkedCheckpoint;
 			}
 		}
 		togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
 		togglingOffPracticeModeManually = false;
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
-		if (isMimicADOFAIPrcMd && m_currentCheckpoint) PlayLayer::loadFromCheckpoint(m_currentCheckpoint);
+		if (isMimicADOFAIPrcMd && targetCheckpoint) { 
+			m_currentCheckpoint = targetCheckpoint;
+			PlayLayer::loadFromCheckpoint(m_currentCheckpoint);
+		}
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 			if (checkpoint && checkpoint->m_physicalCheckpointObject && !checkpoint->m_physicalCheckpointObject->isVisible()) {
 				checkpoint->m_physicalCheckpointObject->setVisible(true);
