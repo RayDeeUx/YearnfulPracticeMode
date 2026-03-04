@@ -1,8 +1,9 @@
 #include <Geode/modify/PlayerObject.hpp>
+#include "Manager.hpp"
 
-#define isEnabled Mod::get()->getSettingValue<bool>("enabled")
-#define hideInNormalMode Mod::get()->getSettingValue<bool>("hideInNormalMode")
-#define autoPracticeMode Mod::get()->getSettingValue<bool>("autoPracticeMode")
+#define isEnabled Manager::get()->enabled
+#define hideInNormalMode Manager::get()->hideInNormalMode
+#define autoPracticeMode Manager::get()->autoPracticeMode
 
 using namespace geode::prelude;
 
@@ -54,3 +55,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 		m_fields->yearningLastCheckpointTime = 0.0;
 	}
 };
+
+$on_mod(Loaded) {
+	Manager::loadStuff();
+}

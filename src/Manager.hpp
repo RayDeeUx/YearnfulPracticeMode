@@ -13,11 +13,31 @@ public:
 
 	bool calledAlready = false;
 
-	static Manager* getSharedInstance() {
-		if (!instance) {
-			instance = new Manager();
-		}
+	bool enabled = false;
+	bool hideInNormalMode = false;
+	bool autoPracticeMode = false;
+
+	static Manager* get() {
+		if (!instance) instance = new Manager();
 		return instance;
 	}
 
+	void loadStuff() {
+		Manager* manager = Manager::get();
+		
+		manager->enabled = geode::Mod::get()->getSettingValue<bool>("enabled");
+		listenForSettingChanges<bool>("enabled", [](const bool enabledNew) {
+			Manager::get()->enabled = enabledNew;
+		});
+
+		manager->hideInNormalMode = geode::Mod::get()->getSettingValue<bool>("hideInNormalMode");
+		listenForSettingChanges<bool>("hideInNormalMode", [](const bool hideInNormalModeNew) {
+			Manager::get()->hideInNormalMode = hideInNormalModeNew;
+		});
+
+		manager->autoPracticeMode = geode::Mod::get()->getSettingValue<bool>("autoPracticeMode");
+		listenForSettingChanges<bool>("autoPracticeMode", [](const bool autoPracticeModeNew) {
+			Manager::get()->autoPracticeMode = autoPracticeModeNew;
+		});
+	}
 };

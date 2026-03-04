@@ -14,8 +14,6 @@ project(YearnfulPracticeMode VERSION 1.0.0)
 add_library(${PROJECT_NAME} SHARED
     src/Manager.cpp
     src/Manager.hpp
-    src/Utils.cpp
-    src/Utils.hpp
     src/LevelInfoLayer.cpp
     src/PlayerObject.cpp
     src/PauseLayer.cpp

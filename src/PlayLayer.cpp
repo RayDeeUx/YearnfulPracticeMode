@@ -1,6 +1,6 @@
 #include <Geode/modify/PlayLayer.hpp>
 
-#define isEnabled Mod::get()->getSettingValue<bool>("enabled")
+#define isEnabled Manager::get()->enabled
 
 using namespace geode::prelude;
 

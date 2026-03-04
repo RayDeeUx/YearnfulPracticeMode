@@ -1,8 +1,6 @@
 #include <Geode/modify/PauseLayer.hpp>
 #include <Geode/ui/GeodeUI.hpp>
 
-#define isEnabled Mod::get()->getSettingValue<bool>("enabled")
-
 using namespace geode::prelude;
 
 class $modify(MyPauseLayer, PauseLayer) {
