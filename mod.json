@@ -1,8 +1,9 @@
 {
-	"geode": "4.0.1",
+	"geode": "4.10.2",
 	"gd": {
 		"win": "2.2074",
 		"mac": "2.2074",
+		"ios": "2.2074",
 		"android": "2.2074"
 	},
 	"id": "raydeeux.yearnfulpracticemode",

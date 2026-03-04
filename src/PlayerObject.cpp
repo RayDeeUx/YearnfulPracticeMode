@@ -19,37 +19,33 @@ class $modify(MyPlayerObject, PlayerObject) {
 	}
 	void hitGround(GameObject* object, bool unknown) {
 		PlayerObject::hitGround(object, unknown);
-		const auto pl = PlayLayer::get();
-		if (!pl || !isEnabled || this->m_isDead) return MyPlayerObject::resetTimer();
-		if (pl->m_isPracticeMode || pl->m_isTestMode || !m_fields->canCheckpointNow || this != pl->m_player1 || this->isFlyingAndYearning() || this->m_isSpider) return;
-		CheckpointObject* checkpoint = pl->markCheckpoint();
+		if (!m_playLayer || !isEnabled || this->m_isDead) return MyPlayerObject::resetTimer();
+		if (m_playLayer->m_isPracticeMode || m_playLayer->m_isTestMode || !m_fields->canCheckpointNow || this != m_playLayer->m_player1 || this->isFlyingAndYearning() || this->m_isSpider) return;
+		CheckpointObject* checkpoint = m_playLayer->markCheckpoint();
 		if (hideInNormalMode) checkpoint->m_physicalCheckpointObject->setVisible(false);
 		m_fields->canCheckpointNow = false;
 	}
 	void incrementJumps() {
 		PlayerObject::incrementJumps();
-		const auto pl = PlayLayer::get();
-		if (!pl || !isEnabled || this->m_isDead) return MyPlayerObject::resetTimer();
-		if (pl->m_isPracticeMode || pl->m_isTestMode || m_fields->canCheckpointNow || this != pl->m_player1 || this->isFlyingAndYearning() || this->m_isSpider) return;
+		if (!m_playLayer || !isEnabled || this->m_isDead) return MyPlayerObject::resetTimer();
+		if (m_playLayer->m_isPracticeMode || m_playLayer->m_isTestMode || m_fields->canCheckpointNow || this != m_playLayer->m_player1 || this->isFlyingAndYearning() || this->m_isSpider) return;
 		m_fields->canCheckpointNow = true;
 	}
 	void playerDestroyed(bool otherPlayer) {
 		PlayerObject::playerDestroyed(otherPlayer);
-		const auto pl = PlayLayer::get();
-		if (!pl || !isEnabled) return MyPlayerObject::resetTimer();
-		if (pl->m_isPracticeMode || pl->m_isTestMode || (this != pl->m_player1 && this != pl->m_player2)) return;
-		if (!autoPracticeMode) return pl->removeAllCheckpoints();
-		pl->togglePracticeMode(true);
-		if (pl->m_currentCheckpoint) pl->loadFromCheckpoint(pl->m_currentCheckpoint);
+		if (!m_playLayer || !isEnabled) return MyPlayerObject::resetTimer();
+		if (m_playLayer->m_isPracticeMode || m_playLayer->m_isTestMode || (this != m_playLayer->m_player1 && this != m_playLayer->m_player2)) return;
+		if (!autoPracticeMode && m_playLayer->m_checkpointArray && m_playLayer->m_checkpointArray->getChildrenCount() > 0) return m_playLayer->removeAllCheckpoints();
+		m_playLayer->togglePracticeMode(true);
+		if (m_playLayer->m_currentCheckpoint) m_playLayer->loadFromCheckpoint(m_playLayer->m_currentCheckpoint);
 	}
 	void update(float dt) {
 		PlayerObject::update(dt);
-		const auto pl = PlayLayer::get();
-		if (!pl || !isEnabled || this->m_isDead) return MyPlayerObject::resetTimer();
-		if (pl->m_isPracticeMode || pl->m_isTestMode || (this != pl->m_player1 && this != pl->m_player2) || (!this->isFlyingAndYearning() && !this->m_isSpider)) return;
+		if (!m_playLayer || !isEnabled || this->m_isDead) return MyPlayerObject::resetTimer();
+		if (m_playLayer->m_isPracticeMode || m_playLayer->m_isTestMode || (this != m_playLayer->m_player1 && this != m_playLayer->m_player2) || (!this->isFlyingAndYearning() && !this->m_isSpider)) return;
 		m_fields->yearningLastCheckpointTime += dt;
 		if (m_fields->yearningLastCheckpointTime < (Mod::get()->getSettingValue<double>("checkpointDelay") * 10)) return;
-		CheckpointObject* checkpoint = pl->markCheckpoint();
+		CheckpointObject* checkpoint = m_playLayer->markCheckpoint();
 		if (hideInNormalMode) checkpoint->m_physicalCheckpointObject->setVisible(false);
 		m_fields->yearningLastCheckpointTime = 0.0;
 	}
