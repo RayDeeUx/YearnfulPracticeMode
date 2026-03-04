@@ -17,6 +17,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					Manager::get()->checkpointObjects.push_back(geode::Ref(checkpoint));
+					checkpoint->m_physicalCheckpointObject->setVisible(false);
 				}
 			}
 		}
@@ -53,11 +54,13 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::removeCheckpoint(first);
 	}
 	void togglePracticeMode(bool status) {
+		if (status && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) {
+			if (CheckpointObject* checkedCheckpoint = static_cast<CheckpointObject*>(m_checkpointArray->objectAtIndex(m_checkpointArray->count() - 1)); checkedCheckpoint && isMimicADOFAIPrcMd) {
+				m_currentCheckpoint = checkedCheckpoint;
+			}
+		}
 		PlayLayer::togglePracticeMode(status);
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
-		if (CheckpointObject* checkedCheckpoint = static_cast<CheckpointObject*>(m_checkpointArray->objectAtIndex(m_checkpointArray->count() - 1)); checkedCheckpoint && isMimicADOFAIPrcMd) {
-			PlayLayer::loadFromCheckpoint(checkedCheckpoint);
-		}
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 			if (checkpoint && checkpoint->m_physicalCheckpointObject && !checkpoint->m_physicalCheckpointObject->isVisible()) {
 				checkpoint->m_physicalCheckpointObject->setVisible(true);
