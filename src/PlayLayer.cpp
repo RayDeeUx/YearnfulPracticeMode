@@ -6,14 +6,17 @@
 
 using namespace geode::prelude;
 
+bool togglingOffPracticeModeManually = false;
+
 class $modify(MyPlayLayer, PlayLayer) {
 	struct Fields {
 		~Fields() {
+			togglingOffPracticeModeManually = false;
 			if (!Manager::get()->checkpointObjects.empty()) Manager::get()->checkpointObjects.clear();
 		}
 	};
 	void removeAllCheckpoints() {
-		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && m_checkpointArray && m_checkpointArray->count() > 0) {
+		if (!togglingOffPracticeModeManually && !m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && m_checkpointArray && m_checkpointArray->count() > 0) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					Manager::get()->checkpointObjects.push_back(geode::Ref(checkpoint));
@@ -60,7 +63,9 @@ class $modify(MyPlayLayer, PlayLayer) {
 				m_currentCheckpoint = checkedCheckpoint;
 			}
 		}
+		togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
+		togglingOffPracticeModeManually = false;
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
 		if (isMimicADOFAIPrcMd && m_currentCheckpoint) PlayLayer::loadFromCheckpoint(m_currentCheckpoint);
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
