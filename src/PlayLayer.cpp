@@ -55,7 +55,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 	void togglePracticeMode(bool status) {
 		PlayLayer::togglePracticeMode(status);
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
-		if (CheckpointObject* checkedCheckpoint = typeinfo_cast<CheckpointObject*>(m_checkpointArray->objectAtIndex(m_checkpointArray->count() - 1)); checkedCheckpoint && mimicADOFAIPrcMd) {
+		if (CheckpointObject* checkedCheckpoint = static_cast<CheckpointObject*>(m_checkpointArray->objectAtIndex(m_checkpointArray->count() - 1)); checkedCheckpoint && mimicADOFAIPrcMd) {
 			PlayLayer::loadFromCheckpoint(checkedCheckpoint);
 		}
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
