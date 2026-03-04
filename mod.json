@@ -64,7 +64,7 @@
 			"version": ">=1.8.1",
 			"required": false
 		},
-		"ninxout.options-api": {
+		"ninxout.options_api": {
 			"version": ">=1.0.3-beta.1",
 			"required": false
 		}
