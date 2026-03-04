@@ -22,7 +22,7 @@ public:
 		return instance;
 	}
 
-	void loadStuff() {
+	static void loadStuff() {
 		Manager* manager = Manager::get();
 		
 		manager->enabled = geode::Mod::get()->getSettingValue<bool>("enabled");
