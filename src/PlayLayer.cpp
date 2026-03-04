@@ -69,8 +69,8 @@ class $modify(MyPlayLayer, PlayLayer) {
 $on_mod(Loaded) {
 	listenForSettingChanges<bool>("hideInNormalMode", [](const bool hideInNormalModeNew) {
 		PlayLayer* pl = PlayLayer::get();
-		if (!pl || pl->m_isPracticeMode) return;
-		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
+		if (!pl || pl->m_isPracticeMode || !pl->m_checkpointArray || pl->m_checkpointArray->count() < 1) return;
+		for (auto checkpoint : CCArrayExt<CheckpointObject*>(pl->m_checkpointArray)) {
 			if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 				checkpoint->m_physicalCheckpointObject->setVisible(hideInNormalModeNew);
 			}
