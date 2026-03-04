@@ -24,12 +24,13 @@ class $modify(MyPlayLayer, PlayLayer) {
 	}
 	void resetLevel() {
 		PlayLayer::resetLevel();
-		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
+		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					PlayLayer::storeCheckpoint(checkpoint);
 				}
 			}
+			Manager::get()->isFromPlayerObjectHook = false;
 			Manager::get()->checkpointObjects.clear();
 		}
 	}

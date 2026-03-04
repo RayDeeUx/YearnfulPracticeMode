@@ -42,7 +42,6 @@ class $modify(MyPlayerObject, PlayerObject) {
 		if (!autoPracticeMode && playLayer->m_checkpointArray && playLayer->m_checkpointArray->count() > 0) {
 			Manager::get()->isFromPlayerObjectHook = true;
 			playLayer->removeAllCheckpoints();
-			Manager::get()->isFromPlayerObjectHook = false;
 			return;
 		}
 		playLayer->togglePracticeMode(true);
