@@ -48,14 +48,14 @@ class $modify(MyPlayLayer, PlayLayer) {
 	}
 	void removeCheckpoint(bool first) {
 		if (isEnabled && m_currentCheckpoint && m_checkpointArray && m_checkpointArray->count() > 0 && std::ranges::find(Manager::get()->checkpointObjects, m_currentCheckpoint) != Manager::get()->checkpointObjects.end()) {
-			Manager::get()->checkpointObjects.erase(std::remove(Manager::get()->checkpointObjects.begin(), Manager::get()->checkpointObjects.end(), m_currentCheckpoint), Manager::get()->checkpointObjects.end());
+			Manager::get()->checkpointObjects.erase(std::remove(Manager::get()->checkpointObjects.begin(), Manager::get()->checkpointObjects.end(), Ref(m_currentCheckpoint)), Manager::get()->checkpointObjects.end());
 		}
 		PlayLayer::removeCheckpoint(first);
 	}
 	void togglePracticeMode(bool status) {
 		PlayLayer::togglePracticeMode(status);
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
-		if (CheckpointObject* checkedCheckpoint = static_cast<CheckpointObject*>(m_checkpointArray->objectAtIndex(m_checkpointArray->count() - 1)); checkedCheckpoint && mimicADOFAIPrcMd) {
+		if (CheckpointObject* checkedCheckpoint = static_cast<CheckpointObject*>(m_checkpointArray->objectAtIndex(m_checkpointArray->count() - 1)); checkedCheckpoint && isMimicADOFAIPrcMd) {
 			PlayLayer::loadFromCheckpoint(checkedCheckpoint);
 		}
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
