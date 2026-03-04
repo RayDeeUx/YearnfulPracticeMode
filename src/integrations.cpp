@@ -57,5 +57,5 @@ $on_mod(Loaded) {
 		addSetting(tab, "enabled");
 		addSetting(tab, "hideInNormalMode");
 		addSetting(tab, "autoPracticeMode");
-	}
+	});
 }
