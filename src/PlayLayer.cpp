@@ -29,6 +29,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					PlayLayer::storeCheckpoint(checkpoint);
+					checkpoint->m_physicalCheckpointObject->setVisible(false);
 				}
 			}
 			Manager::get()->isFromPlayerObjectHook = false;
@@ -61,6 +62,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		PlayLayer::togglePracticeMode(status);
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
+		if (isMimicADOFAIPrcMd && m_currentCheckpoint) PlayLayer::loadFromCheckpoint(m_currentCheckpoint);
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 			if (checkpoint && checkpoint->m_physicalCheckpointObject && !checkpoint->m_physicalCheckpointObject->isVisible()) {
 				checkpoint->m_physicalCheckpointObject->setVisible(true);
