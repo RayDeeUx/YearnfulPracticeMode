@@ -25,7 +25,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 		PlayLayer* playLayer = static_cast<PlayLayer*>(m_gameLayer);
 		if (playLayer->m_isPracticeMode || playLayer->m_isTestMode || !m_fields->canCheckpointNow || this != playLayer->m_player1 || this->isFlyingAndYearning() || m_isSpider) return;
 		CheckpointObject* checkpoint = playLayer->markCheckpoint();
-		if (hideInNormalMode) checkpoint->m_physicalCheckpointObject->setVisible(false);
+		if (hideInNormalMode && checkpoint) checkpoint->m_physicalCheckpointObject->setVisible(false);
 		m_fields->canCheckpointNow = false;
 	}
 	void incrementJumps() {
@@ -55,7 +55,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 		m_fields->yearningLastCheckpointTime += dt;
 		if (m_fields->yearningLastCheckpointTime < (checkpointDelay * 10)) return;
 		CheckpointObject* checkpoint = playLayer->markCheckpoint();
-		if (hideInNormalMode) checkpoint->m_physicalCheckpointObject->setVisible(false);
+		if (hideInNormalMode && checkpoint) checkpoint->m_physicalCheckpointObject->setVisible(false);
 		m_fields->yearningLastCheckpointTime = 0.0;
 	}
 };
