@@ -60,5 +60,5 @@ $on_mod(Loaded) {
 		addSetting(tab, "hideInNormalMode");
 		addSetting(tab, "autoPracticeMode");
 		addSetting(tab, "mimicADOFAIPrcMd");
-	}
+	});
 }
