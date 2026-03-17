@@ -43,6 +43,7 @@
 		},
 		"mimicADOFAIPrcMd": {
 			"name": "Mimic ADOFAI's Checkpoint System",
+			"description": "When turning on <cg>Practice Mode</c> while this setting is enabled, <cl>respawn</c> from the most recently placed <cg>checkpoint</c> instead of the start of the level.",
 			"type": "bool",
 			"default": true
 		},
@@ -66,11 +67,11 @@
 			"required": false
 		},
 		"eclipse.eclipse-menu": {
-			"version": ">=1.8.1",
+			"version": ">=1.8.3",
 			"required": false
 		},
 		"ninxout.options_api": {
-			"version": ">=1.0.3-beta.1",
+			"version": ">=1.0.3",
 			"required": false
 		}
 	},
