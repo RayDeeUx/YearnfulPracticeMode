@@ -32,6 +32,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::resume();
 		if (isEnabled && isMimicADOFAIPrcMd) {
 			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+			FMODAudioEngine* fmod = FMODAudioEngine::get();
 			for (auto& [id, music] : fmod->m_fmodMusic) {
 				if (!music.m_dontReset) {
 					if (auto ch = fmod->channelForChannelID(music.m_channelID))
