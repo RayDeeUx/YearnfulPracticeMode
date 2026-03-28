@@ -33,6 +33,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			PlayLayer::removeAllCheckpoints();
 		}
 		PlayLayer::resetLevel();
+		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
@@ -76,14 +77,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		if (!status) togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
-		if (isEnabled && isMimicADOFAIPrcMd) {
-			FMODAudioEngine::get()->stop();
-			FMODAudioEngine::get()->resumeAllAudio();
-			FMODAudioEngine::get()->m_allAudioPaused = false;
-			FMODAudioEngine::get()->resumeAllMusic();
-			FMODAudioEngine::get()->resumeAllEffects();
-			FMODAudioEngine::get()->start();
-		}
+		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
 		if (!status) togglingOffPracticeModeManually = false;
 		if (!status && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
