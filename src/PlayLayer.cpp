@@ -13,6 +13,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		~Fields() {
 			togglingOffPracticeModeManually = false;
 			if (!Manager::get()->checkpointObjects.empty()) Manager::get()->checkpointObjects.clear();
+			if (!Manager::get()->fmodMusic.empty()) Manager::get()->fmodMusic.clear();
 		}
 	};
 	void removeAllCheckpoints() {
@@ -28,56 +29,11 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		PlayLayer::removeAllCheckpoints();
 	}
-	void resume() {
-		PlayLayer::resume();
-		if (isEnabled && isMimicADOFAIPrcMd) {
-			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
-			FMODAudioEngine* fmod = FMODAudioEngine::get();
-			for (auto& [id, music] : fmod->m_fmodMusic) {
-				log::info("id: {}", id);
-				if (!music.m_dontReset) {
-					if (auto ch = fmod->channelForChannelID(music.m_channelID)) {
-						ch->setPaused(false);
-					}
-				}
-				log::info("resume fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
-			}
-		}
-	}
-	void fullReset() {
-		PlayLayer::fullReset();
-		if (isEnabled && isMimicADOFAIPrcMd) {
-			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
-			FMODAudioEngine* fmod = FMODAudioEngine::get();
-			for (auto& [id, music] : fmod->m_fmodMusic) {
-				log::info("id: {}", id);
-				if (!music.m_dontReset) {
-					if (auto ch = fmod->channelForChannelID(music.m_channelID)) {
-						ch->setPaused(false);
-					}
-				}
-				log::info("FULLRESET fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
-			}
-		}
-	}
 	void resetLevel() {
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd) {
 			PlayLayer::removeAllCheckpoints();
 		}
 		PlayLayer::resetLevel();
-		if (isEnabled && isMimicADOFAIPrcMd) {
-			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
-			FMODAudioEngine* fmod = FMODAudioEngine::get();
-			for (auto& [id, music] : fmod->m_fmodMusic) {
-				log::info("id: {}", id);
-				if (!music.m_dontReset) {
-					if (auto ch = fmod->channelForChannelID(music.m_channelID)) {
-						ch->setPaused(false);
-					}
-					}
-				}
-				log::info("resetLevel fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
-		}
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
@@ -113,6 +69,11 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::removeCheckpoint(first);
 	}
 	void togglePracticeMode(bool status) {
+		if (!Manager::get()->fmodMusic.empty()) Manager::get()->fmodMusic.clear();
+		FMODAudioEngine* fmod = FMODAudioEngine::get();
+		for (auto& [id, music] : fmod->m_fmodMusic) {
+			Manager::get()->fmodMusic.push_back(music);
+		}
 		CheckpointObject* targetCheckpoint = nullptr;
 		if (status && isEnabled && isMimicADOFAIPrcMd && m_checkpointArray && m_checkpointArray->count() > 0) {
 			if (CheckpointObject* checkedCheckpoint = static_cast<CheckpointObject*>(m_checkpointArray->objectAtIndex(m_checkpointArray->count() - 1)); checkedCheckpoint && isMimicADOFAIPrcMd) {
@@ -121,19 +82,12 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		if (!status) togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
-		if (isEnabled && isMimicADOFAIPrcMd) {
-			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
-			FMODAudioEngine* fmod = FMODAudioEngine::get();
-			for (auto& [id, music] : fmod->m_fmodMusic) {
-				log::info("id: {}", id);
-				if (!music.m_dontReset) {
-					if (auto ch = fmod->channelForChannelID(music.m_channelID)) {
-						ch->setPaused(false);
-					}
-				}
-				log::info("togglepracticemode fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
-				}
+		if (isEnabled && mimicADOFAIPrcMd) {
+			for (FMODMusic music : Manager::get()->fmodMusic) {
+				fmod->m_fmodMusic[music.m_channelID] = music;
+			}
 		}
+		if (!Manager::get()->fmodMusic.empty()) Manager::get()->fmodMusic.clear();
 		if (!status) togglingOffPracticeModeManually = false;
 		if (!status && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
