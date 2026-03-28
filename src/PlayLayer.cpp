@@ -74,6 +74,18 @@ class $modify(MyPlayLayer, PlayLayer) {
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
 				}
 			}
+		} else if (isEnabled && status && m_checkpointArray && isMimicADOFAIPrcMd && !Manager::get()->checkpointObjects.empty() && m_checkpointArray->count() < 1) {
+			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
+				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
+					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					PlayLayer::storeCheckpoint(checkpoint);
+					checkpoint->m_physicalCheckpointObject->setVisible(false);
+				}
+			}
+			if (CheckpointObject* checkedCheckpoint = Manager::get()->checkpointObjects.back(); checkedCheckpoint) {
+				targetCheckpoint = checkedCheckpoint;
+			}
+			Manager::get()->checkpointObjects.clear();
 		}
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
 		if (isMimicADOFAIPrcMd && targetCheckpoint) { 
