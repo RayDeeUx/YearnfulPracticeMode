@@ -21,6 +21,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
 					checkpoint->m_physicalCheckpointObject->setOpacity(0);
+					checkpoint->m_physicalCheckpointObject->setScale(0);
 					Manager::get()->checkpointObjects.push_back(geode::Ref(checkpoint));
 				}
 			}
@@ -37,19 +38,16 @@ class $modify(MyPlayLayer, PlayLayer) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
 					checkpoint->m_physicalCheckpointObject->setOpacity(0);
+					checkpoint->m_physicalCheckpointObject->setScale(0);
 					PlayLayer::storeCheckpoint(checkpoint);
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
 					checkpoint->m_physicalCheckpointObject->setOpacity(0);
+					checkpoint->m_physicalCheckpointObject->setScale(0);
 				}
 			}
 			Manager::get()->isFromPlayerObjectHook = false;
 			Manager::get()->checkpointObjects.clear();
 		}
-		FMODAudioEngine::get()->resumeAllAudio();
-		FMODAudioEngine::get()->m_allAudioPaused = false;
-		FMODAudioEngine::get()->resumeAllMusic();
-		FMODAudioEngine::get()->resumeAllEffects();
-		FMODAudioEngine::get()->start();
 	}
 	void playEndAnimationToPos(cocos2d::CCPoint position) {
 		if (!m_isPracticeMode && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) PlayLayer::removeAllCheckpoints();
@@ -78,12 +76,14 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		if (!status) togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
-		FMODAudioEngine::get()->stop();
-		FMODAudioEngine::get()->resumeAllAudio();
-		FMODAudioEngine::get()->m_allAudioPaused = false;
-		FMODAudioEngine::get()->resumeAllMusic();
-		FMODAudioEngine::get()->resumeAllEffects();
-		FMODAudioEngine::get()->start();
+		if (isEnabled && isMimicADOFAIPrcMd) {
+			FMODAudioEngine::get()->stop();
+			FMODAudioEngine::get()->resumeAllAudio();
+			FMODAudioEngine::get()->m_allAudioPaused = false;
+			FMODAudioEngine::get()->resumeAllMusic();
+			FMODAudioEngine::get()->resumeAllEffects();
+			FMODAudioEngine::get()->start();
+		}
 		if (!status) togglingOffPracticeModeManually = false;
 		if (!status && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
@@ -96,9 +96,11 @@ class $modify(MyPlayLayer, PlayLayer) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
 					checkpoint->m_physicalCheckpointObject->setOpacity(0);
+					checkpoint->m_physicalCheckpointObject->setScale(0);
 					PlayLayer::storeCheckpoint(checkpoint);
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
 					checkpoint->m_physicalCheckpointObject->setOpacity(0);
+					checkpoint->m_physicalCheckpointObject->setScale(0);
 				}
 			}
 			if (CheckpointObject* checkedCheckpoint = Manager::get()->checkpointObjects.back(); checkedCheckpoint) {
@@ -122,6 +124,8 @@ $on_mod(Loaded) {
 		for (auto checkpoint : CCArrayExt<CheckpointObject*>(pl->m_checkpointArray)) {
 			if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 				checkpoint->m_physicalCheckpointObject->setVisible(hideInNormalModeNew);
+				checkpoint->m_physicalCheckpointObject->setOpacity(hideInNormalModeNew ? 0 : 255);
+				checkpoint->m_physicalCheckpointObject->setScale(hideInNormalModeNew ? 0 : 1.f);
 			}
 		}
 	});
