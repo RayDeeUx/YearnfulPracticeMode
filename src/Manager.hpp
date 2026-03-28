@@ -23,8 +23,6 @@ public:
 	bool isFromPlayerObjectHook = false;
 	std::vector<geode::Ref<CheckpointObject>> checkpointObjects;
 
-	std::vector<FMODMusic> fmodMusic;
-
 	static Manager* get() {
 		if (!instance) instance = new Manager();
 		return instance;
