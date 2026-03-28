@@ -31,11 +31,11 @@
 $on_mod(Loaded) {
 	ADD_LEVELINFOLAYER_TOGGLE("Hide Checkpoints in Normal Mode", "hideInNormalMode", "Self-explanatory.")
 	ADD_LEVELINFOLAYER_TOGGLE("Auto Practice Mode on Death", "autoPracticeMode", "Automatically enable <cg>Practice Mode</c> on player death.\n\n<cy>If this is disabled,</c> <cj>all</c> <cg>placed checkpoints</c> <cy>will be</c> <cr>deleted</c> <cy>before</c> <co>restarting</c> <cy>the level.</c>")
-	ADD_LEVELINFOLAYER_TOGGLE("Mimic ADOFAI's Checkpoint System", "mimicADOFAIPrcMd", "Automatically enable <cg>Practice Mode</c> on player death.\n\n<cy>If this is disabled,</c> <cj>all</c> <cg>placed checkpoints</c> <cy>will be</c> <cr>deleted</c> <cy>before</c> <co>restarting</c> <cy>the level.</c>")
+	ADD_LEVELINFOLAYER_TOGGLE("Mimic ADOFAI's Checkpoint System /!\\ (READ!) /!\\", "mimicADOFAIPrcMd", "<c-ff0000>***__THIS FEATURE IS KNOWN TO CAUSE ISSUES WITH LEVEL AUDIO WHEN SWITCHING BETWEEN PRACTICE MODE AND NORMAL MODE. DO NOT REPORT THESE BUGS.__***</c>\n\nWhen turning on <cg>Practice Mode</c> while this setting is enabled, <cl>respawn</c> from the most recently placed <cg>checkpoint</c> instead of the start of the level.")
 
 	ADD_PAUSELAYER_TOGGLE("Hide Checkpoints in Normal Mode", "hideInNormalMode", "Self-explanatory.\n\n<co>(Requires re-entering the level to apply.)</c>")
-	ADD_PAUSELAYER_TOGGLE("Auto Practice Mode on Death", "autoPracticeMode", "When turning on <cg>Practice Mode</c> while this setting is enabled, <cl>respawn</c> from the most recently placed <cg>checkpoint</c> instead of the start of the level.")
-	ADD_PAUSELAYER_TOGGLE("Mimic ADOFAI's Checkpoint System", "mimicADOFAIPrcMd", "Automatically enable <cg>Practice Mode</c> on player death.\n\n<cy>If this is disabled,</c> <cj>all</c> <cg>placed checkpoints</c> <cy>will be</c> <cr>deleted</c> <cy>before</c> <co>restarting</c> <cy>the level.</c>")
+	ADD_PAUSELAYER_TOGGLE("Auto Practice Mode on Death", "autoPracticeMode", "Automatically enable <cg>Practice Mode</c> on player death.\n\n<cy>If this is disabled,</c> <cj>all</c> <cg>placed checkpoints</c> <cy>will be</c> <cr>deleted</c> <cy>before</c> <co>restarting</c> <cy>the level.</c>")
+	ADD_PAUSELAYER_TOGGLE("Mimic ADOFAI's Checkpoint System /!\\ (READ!) /!\\", "mimicADOFAIPrcMd", "<c-ff0000>***__THIS FEATURE IS KNOWN TO CAUSE ISSUES WITH LEVEL AUDIO WHEN SWITCHING BETWEEN PRACTICE MODE AND NORMAL MODE. DO NOT REPORT THESE BUGS.__***</c>\n\nWhen turning on <cg>Practice Mode</c> while this setting is enabled, <cl>respawn</c> from the most recently placed <cg>checkpoint</c> instead of the start of the level.")
 }
 
 #define ECLIPSE_MODULES_HPP
@@ -46,7 +46,7 @@ using namespace geode::prelude;
 
 void addSetting(MenuTab& tab, const std::string& settingsKey) {
 	if (std::shared_ptr<SettingV3> setting = Mod::get()->getSetting(settingsKey); setting) {
-		const std::string& colorlessDesc = string::replace(string::replace(string::replace(string::replace(string::replace(string::replace(string::replace(setting->getDescription().value_or("Self-explanatory."), "<cr>", ""), "<co>", ""), "<cl>", ""), "</c>", ""), "<cj>", ""), "<cy>", ""), "<cg>", "");
+		const std::string& colorlessDesc = string::replace(string::replace(string::replace(string::replace(string::replace(string::replace(string::replace(string::replace(setting->getDescription().value_or("Self-explanatory."), "<c-ff0000>", ""), "<cr>", ""), "<co>", ""), "<cl>", ""), "</c>", ""), "<cj>", ""), "<cy>", ""), "<cg>", "");
 		tab.addModSettingToggle(setting).setDescription(colorlessDesc);
 	}
 }

@@ -8,7 +8,7 @@
 	},
 	"id": "raydeeux.yearnfulpracticemode",
 	"name": "YearnfulPracticeMode",
-	"version": "v1.0.1",
+	"version": "v1.0.2-beta.1",
 	"developer": "RayDeeUx",
 	"description": "Enables Practice Mode on player death.",
 	"repository": "https://github.com/RayDeeUx/YearnfulPracticeMode",
@@ -42,10 +42,10 @@
 			"default": true
 		},
 		"mimicADOFAIPrcMd": {
-			"name": "Mimic ADOFAI's Checkpoint System",
-			"description": "When turning on <cg>Practice Mode</c> while this setting is enabled, <cl>respawn</c> from the most recently placed <cg>checkpoint</c> instead of the start of the level.",
+			"name": "/!\\ Mimic ADOFAI's Checkpoint System (READ!) /!\\",
+			"description": "<c-ff0000>***__THIS FEATURE IS KNOWN TO CAUSE ISSUES WITH LEVEL AUDIO WHEN SWITCHING BETWEEN PRACTICE MODE AND NORMAL MODE. DO NOT REPORT THESE BUGS.__***</c>\n\nWhen turning on <cg>Practice Mode</c> while this setting is enabled, <cl>respawn</c> from the most recently placed <cg>checkpoint</c> instead of the start of the level.",
 			"type": "bool",
-			"default": true
+			"default": false
 		},
 		"autoPracticeMode": {
 			"name": "Auto Practice Mode on Death",
