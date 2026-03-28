@@ -36,9 +36,10 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (auto& [id, music] : fmod->m_fmodMusic) {
 				if (!music.m_dontReset) {
 					if (auto ch = fmod->channelForChannelID(music.m_channelID))
-						ch->setPaused(false);
-				}
+					ch->setPaused(false);
 			}
+			log::info("resume fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
+		}
 		}
 	}
 	void fullReset() {
@@ -49,9 +50,10 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (auto& [id, music] : fmod->m_fmodMusic) {
 				if (!music.m_dontReset) {
 					if (auto ch = fmod->channelForChannelID(music.m_channelID))
-						ch->setPaused(false);
-				}
+					ch->setPaused(false);
 			}
+			log::info("FULLRESET fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
+		}
 		}
 	}
 	void resetLevel() {
@@ -68,6 +70,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 						ch->setPaused(false);
 				}
 			}
+			log::info("resetLevel fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
 		}
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
@@ -118,8 +121,9 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (auto& [id, music] : fmod->m_fmodMusic) {
 				if (!music.m_dontReset) {
 					if (auto ch = fmod->channelForChannelID(music.m_channelID))
-						ch->setPaused(false);
-				}
+					ch->setPaused(false);
+			}
+			log::info("togglepracticemode fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
 			}
 		}
 		if (!status) togglingOffPracticeModeManually = false;
@@ -127,6 +131,8 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					checkpoint->m_physicalCheckpointObject->setOpacity(0);
+					checkpoint->m_physicalCheckpointObject->setScale(0);
 				}
 			}
 		} else if (isEnabled && status && m_checkpointArray && isMimicADOFAIPrcMd && !Manager::get()->checkpointObjects.empty() && m_checkpointArray->count() < 1) {
@@ -146,8 +152,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			}
 			Manager::get()->checkpointObjects.clear();
 		}
-		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
-		if (isMimicADOFAIPrcMd && targetCheckpoint && status) { 
+		if (isEnabled && isMimicADOFAIPrcMd && targetCheckpoint && status) { 
 			m_currentCheckpoint = targetCheckpoint;
 			PlayLayer::loadFromCheckpoint(targetCheckpoint);
 			PlayLayer::resetLevel();
