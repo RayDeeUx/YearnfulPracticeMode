@@ -34,6 +34,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		PlayLayer::resetLevel();
 		if (Manager::get()->shouldSwitchToPracticeMode && !m_isPracticeMode && isEnabled) {
+			Manager::get()->shouldSwitchToPracticeMode = false;
 			PlayLayer::togglePracticeMode(true);
 		}
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
