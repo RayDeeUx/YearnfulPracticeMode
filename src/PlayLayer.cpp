@@ -34,12 +34,14 @@ class $modify(MyPlayLayer, PlayLayer) {
 			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
 			FMODAudioEngine* fmod = FMODAudioEngine::get();
 			for (auto& [id, music] : fmod->m_fmodMusic) {
+				log::info("id: {}", id);
 				if (!music.m_dontReset) {
-					if (auto ch = fmod->channelForChannelID(music.m_channelID))
-					ch->setPaused(false);
+					if (auto ch = fmod->channelForChannelID(music.m_channelID)) {
+						ch->setPaused(false);
+					}
+				}
+				log::info("resume fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
 			}
-			log::info("resume fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
-		}
 		}
 	}
 	void fullReset() {
@@ -48,12 +50,14 @@ class $modify(MyPlayLayer, PlayLayer) {
 			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
 			FMODAudioEngine* fmod = FMODAudioEngine::get();
 			for (auto& [id, music] : fmod->m_fmodMusic) {
+				log::info("id: {}", id);
 				if (!music.m_dontReset) {
-					if (auto ch = fmod->channelForChannelID(music.m_channelID))
-					ch->setPaused(false);
+					if (auto ch = fmod->channelForChannelID(music.m_channelID)) {
+						ch->setPaused(false);
+					}
+				}
+				log::info("FULLRESET fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
 			}
-			log::info("FULLRESET fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
-		}
 		}
 	}
 	void resetLevel() {
@@ -65,12 +69,14 @@ class $modify(MyPlayLayer, PlayLayer) {
 			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
 			FMODAudioEngine* fmod = FMODAudioEngine::get();
 			for (auto& [id, music] : fmod->m_fmodMusic) {
+				log::info("id: {}", id);
 				if (!music.m_dontReset) {
-					if (auto ch = fmod->channelForChannelID(music.m_channelID))
+					if (auto ch = fmod->channelForChannelID(music.m_channelID)) {
 						ch->setPaused(false);
+					}
+					}
 				}
-			}
-			log::info("resetLevel fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
+				log::info("resetLevel fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
 		}
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
@@ -119,12 +125,14 @@ class $modify(MyPlayLayer, PlayLayer) {
 			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
 			FMODAudioEngine* fmod = FMODAudioEngine::get();
 			for (auto& [id, music] : fmod->m_fmodMusic) {
+				log::info("id: {}", id);
 				if (!music.m_dontReset) {
-					if (auto ch = fmod->channelForChannelID(music.m_channelID))
-					ch->setPaused(false);
-			}
-			log::info("togglepracticemode fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
-			}
+					if (auto ch = fmod->channelForChannelID(music.m_channelID)) {
+						ch->setPaused(false);
+					}
+				}
+				log::info("togglepracticemode fmod->m_allAudioPaused: {}", fmod->m_allAudioPaused);
+				}
 		}
 		if (!status) togglingOffPracticeModeManually = false;
 		if (!status && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) {
