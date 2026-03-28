@@ -82,7 +82,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		if (!status) togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
-		if (isEnabled && mimicADOFAIPrcMd) {
+		if (isEnabled && isMimicADOFAIPrcMd) {
 			for (FMODMusic music : Manager::get()->fmodMusic) {
 				fmod->m_fmodMusic[music.m_channelID] = music;
 			}
