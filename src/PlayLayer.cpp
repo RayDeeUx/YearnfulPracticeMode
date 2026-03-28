@@ -49,6 +49,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		FMODAudioEngine::get()->m_allAudioPaused = false;
 		FMODAudioEngine::get()->resumeAllMusic();
 		FMODAudioEngine::get()->resumeAllEffects();
+		FMODAudioEngine::get()->start();
 	}
 	void playEndAnimationToPos(cocos2d::CCPoint position) {
 		if (!m_isPracticeMode && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) PlayLayer::removeAllCheckpoints();
@@ -104,6 +105,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			FMODAudioEngine::get()->m_allAudioPaused = false;
 			FMODAudioEngine::get()->resumeAllMusic();
 			FMODAudioEngine::get()->resumeAllEffects();
+			FMODAudioEngine::get()->start();
 			return;
 		}
 		if (isMimicADOFAIPrcMd && targetCheckpoint && status) { 
@@ -115,6 +117,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		FMODAudioEngine::get()->m_allAudioPaused = false;
 		FMODAudioEngine::get()->resumeAllMusic();
 		FMODAudioEngine::get()->resumeAllEffects();
+		FMODAudioEngine::get()->start();
 	}
 };
 
