@@ -20,6 +20,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					checkpoint->m_physicalCheckpointObject->setOpacity(0);
 					Manager::get()->checkpointObjects.push_back(geode::Ref(checkpoint));
 				}
 			}
@@ -32,12 +33,15 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					checkpoint->m_physicalCheckpointObject->setOpacity(0);
 					PlayLayer::storeCheckpoint(checkpoint);
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					checkpoint->m_physicalCheckpointObject->setOpacity(0);
 				}
 			}
 			Manager::get()->isFromPlayerObjectHook = false;
 			Manager::get()->checkpointObjects.clear();
+			FMODAudioEngine::get()->resumeAllAudio();
 		}
 	}
 	void playEndAnimationToPos(cocos2d::CCPoint position) {
@@ -78,8 +82,10 @@ class $modify(MyPlayLayer, PlayLayer) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					checkpoint->m_physicalCheckpointObject->setOpacity(0);
 					PlayLayer::storeCheckpoint(checkpoint);
 					checkpoint->m_physicalCheckpointObject->setVisible(false);
+					checkpoint->m_physicalCheckpointObject->setOpacity(0);
 				}
 			}
 			if (CheckpointObject* checkedCheckpoint = Manager::get()->checkpointObjects.back(); checkedCheckpoint) {
@@ -88,10 +94,11 @@ class $modify(MyPlayLayer, PlayLayer) {
 			Manager::get()->checkpointObjects.clear();
 		}
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
-		if (isMimicADOFAIPrcMd && targetCheckpoint) { 
+		if (isMimicADOFAIPrcMd && targetCheckpoint && status) { 
 			m_currentCheckpoint = targetCheckpoint;
 			PlayLayer::loadFromCheckpoint(targetCheckpoint);
 			PlayLayer::resetLevel();
+			FMODAudioEngine::get()->resumeAllAudio();
 		}
 	}
 };
