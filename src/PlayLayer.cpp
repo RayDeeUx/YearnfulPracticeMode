@@ -41,8 +41,10 @@ class $modify(MyPlayLayer, PlayLayer) {
 			}
 			Manager::get()->isFromPlayerObjectHook = false;
 			Manager::get()->checkpointObjects.clear();
-			FMODAudioEngine::get()->resumeAllAudio();
+		} else if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd) {
+			PlayLayer::removeAllCheckpoints();
 		}
+		FMODAudioEngine::get()->resumeAllAudio(); // 
 	}
 	void playEndAnimationToPos(cocos2d::CCPoint position) {
 		if (!m_isPracticeMode && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) PlayLayer::removeAllCheckpoints();
