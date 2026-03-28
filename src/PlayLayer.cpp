@@ -46,6 +46,9 @@ class $modify(MyPlayLayer, PlayLayer) {
 			Manager::get()->checkpointObjects.clear();
 		}
 		FMODAudioEngine::get()->resumeAllAudio();
+		FMODAudioEngine::get()->m_allAudioPaused = false;
+		FMODAudioEngine::get()->resumeAllMusic();
+		FMODAudioEngine::get()->resumeAllEffects();
 	}
 	void playEndAnimationToPos(cocos2d::CCPoint position) {
 		if (!m_isPracticeMode && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) PlayLayer::removeAllCheckpoints();
