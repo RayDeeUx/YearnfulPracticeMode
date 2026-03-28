@@ -78,6 +78,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		if (!status) togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
+		FMODAudioEngine::get()->stop();
 		FMODAudioEngine::get()->resumeAllAudio();
 		FMODAudioEngine::get()->m_allAudioPaused = false;
 		FMODAudioEngine::get()->resumeAllMusic();
