@@ -29,8 +29,12 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::removeAllCheckpoints();
 	}
 	void resume() {
-		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
 		PlayLayer::resume();
+		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+	}
+	void fullReset() {
+		PlayLayer::fullReset();
+		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
 	}
 	void resetLevel() {
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd) {
