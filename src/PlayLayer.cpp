@@ -33,6 +33,9 @@ class $modify(MyPlayLayer, PlayLayer) {
 			PlayLayer::removeAllCheckpoints();
 		}
 		PlayLayer::resetLevel();
+		if (Manager::get()->shouldSwitchToPracticeMode && !m_isPracticeMode && isEnabled) {
+			PlayLayer::togglePracticeMode(true);
+		}
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {

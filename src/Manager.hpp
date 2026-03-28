@@ -23,6 +23,8 @@ public:
 	bool isFromPlayerObjectHook = false;
 	std::vector<geode::Ref<CheckpointObject>> checkpointObjects;
 
+	bool shouldSwitchToPracticeMode = false;
+
 	static Manager* get() {
 		if (!instance) instance = new Manager();
 		return instance;

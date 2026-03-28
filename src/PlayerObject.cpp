@@ -45,7 +45,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 			playLayer->removeAllCheckpoints();
 			return;
 		}
-		playLayer->togglePracticeMode(true);
+		if (autoPracticeMode) Manager::get()->shouldSwitchToPracticeMode = true;
 	}
 	void update(float dt) {
 		PlayerObject::update(dt);
