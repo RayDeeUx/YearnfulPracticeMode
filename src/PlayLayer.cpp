@@ -98,6 +98,9 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) {
 			FMODAudioEngine::get()->resumeAllAudio();
+			FMODAudioEngine::get()->m_allAudioPaused = false;
+			FMODAudioEngine::get()->resumeAllMusic();
+			FMODAudioEngine::get()->resumeAllEffects();
 			return;
 		}
 		if (isMimicADOFAIPrcMd && targetCheckpoint && status) { 
@@ -106,6 +109,9 @@ class $modify(MyPlayLayer, PlayLayer) {
 			PlayLayer::resetLevel();
 		}
 		FMODAudioEngine::get()->resumeAllAudio();
+		FMODAudioEngine::get()->m_allAudioPaused = false;
+		FMODAudioEngine::get()->resumeAllMusic();
+		FMODAudioEngine::get()->resumeAllEffects();
 	}
 };
 
