@@ -30,18 +30,44 @@ class $modify(MyPlayLayer, PlayLayer) {
 	}
 	void resume() {
 		PlayLayer::resume();
-		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+		if (isEnabled && isMimicADOFAIPrcMd) {
+			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+			for (auto& [id, music] : fmod->m_fmodMusic) {
+				if (!music.m_dontReset) {
+					if (auto ch = fmod->channelForChannelID(music.m_channelID))
+						ch->setPaused(false);
+				}
+			}
+		}
 	}
 	void fullReset() {
 		PlayLayer::fullReset();
-		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+		if (isEnabled && isMimicADOFAIPrcMd) {
+			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+			FMODAudioEngine* fmod = FMODAudioEngine::get();
+			for (auto& [id, music] : fmod->m_fmodMusic) {
+				if (!music.m_dontReset) {
+					if (auto ch = fmod->channelForChannelID(music.m_channelID))
+						ch->setPaused(false);
+				}
+			}
+		}
 	}
 	void resetLevel() {
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd) {
 			PlayLayer::removeAllCheckpoints();
 		}
 		PlayLayer::resetLevel();
-		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+		if (isEnabled && isMimicADOFAIPrcMd) {
+			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+			FMODAudioEngine* fmod = FMODAudioEngine::get();
+			for (auto& [id, music] : fmod->m_fmodMusic) {
+				if (!music.m_dontReset) {
+					if (auto ch = fmod->channelForChannelID(music.m_channelID))
+						ch->setPaused(false);
+				}
+			}
+		}
 		if (!m_isPracticeMode && isEnabled && isMimicADOFAIPrcMd && Manager::get()->isFromPlayerObjectHook && !Manager::get()->checkpointObjects.empty() && m_checkpointArray && m_checkpointArray->count() < 1) {
 			for (CheckpointObject* checkpoint : Manager::get()->checkpointObjects) {
 				if (checkpoint && checkpoint->m_physicalCheckpointObject) {
@@ -85,7 +111,16 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		if (!status) togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
-		if (isEnabled && isMimicADOFAIPrcMd) static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+		if (isEnabled && isMimicADOFAIPrcMd) {
+			static_cast<GJBaseGameLayer*>(this)->resumeAudio();
+			FMODAudioEngine* fmod = FMODAudioEngine::get();
+			for (auto& [id, music] : fmod->m_fmodMusic) {
+				if (!music.m_dontReset) {
+					if (auto ch = fmod->channelForChannelID(music.m_channelID))
+						ch->setPaused(false);
+				}
+			}
+		}
 		if (!status) togglingOffPracticeModeManually = false;
 		if (!status && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
