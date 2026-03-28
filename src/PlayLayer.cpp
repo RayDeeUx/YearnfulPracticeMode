@@ -78,6 +78,11 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 		if (!status) togglingOffPracticeModeManually = true;
 		PlayLayer::togglePracticeMode(status);
+		FMODAudioEngine::get()->resumeAllAudio();
+		FMODAudioEngine::get()->m_allAudioPaused = false;
+		FMODAudioEngine::get()->resumeAllMusic();
+		FMODAudioEngine::get()->resumeAllEffects();
+		FMODAudioEngine::get()->start();
 		if (!status) togglingOffPracticeModeManually = false;
 		if (!status && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) {
 			for (auto checkpoint : CCArrayExt<CheckpointObject*>(m_checkpointArray)) {
@@ -100,24 +105,12 @@ class $modify(MyPlayLayer, PlayLayer) {
 			}
 			Manager::get()->checkpointObjects.clear();
 		}
-		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) {
-			FMODAudioEngine::get()->resumeAllAudio();
-			FMODAudioEngine::get()->m_allAudioPaused = false;
-			FMODAudioEngine::get()->resumeAllMusic();
-			FMODAudioEngine::get()->resumeAllEffects();
-			FMODAudioEngine::get()->start();
-			return;
-		}
+		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
 		if (isMimicADOFAIPrcMd && targetCheckpoint && status) { 
 			m_currentCheckpoint = targetCheckpoint;
 			PlayLayer::loadFromCheckpoint(targetCheckpoint);
 			PlayLayer::resetLevel();
 		}
-		FMODAudioEngine::get()->resumeAllAudio();
-		FMODAudioEngine::get()->m_allAudioPaused = false;
-		FMODAudioEngine::get()->resumeAllMusic();
-		FMODAudioEngine::get()->resumeAllEffects();
-		FMODAudioEngine::get()->start();
 	}
 };
 
