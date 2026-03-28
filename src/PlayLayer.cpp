@@ -45,7 +45,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			Manager::get()->isFromPlayerObjectHook = false;
 			Manager::get()->checkpointObjects.clear();
 		}
-		FMODAudioEngine::get()->resumeAllAudio(); // 
+		FMODAudioEngine::get()->resumeAllAudio();
 	}
 	void playEndAnimationToPos(cocos2d::CCPoint position) {
 		if (!m_isPracticeMode && isEnabled && m_checkpointArray && m_checkpointArray->count() > 0) PlayLayer::removeAllCheckpoints();
@@ -96,13 +96,16 @@ class $modify(MyPlayLayer, PlayLayer) {
 			}
 			Manager::get()->checkpointObjects.clear();
 		}
-		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) return;
+		if (!status || !isEnabled || !m_checkpointArray || m_checkpointArray->count() < 1) {
+			FMODAudioEngine::get()->resumeAllAudio();
+			return;
+		}
 		if (isMimicADOFAIPrcMd && targetCheckpoint && status) { 
 			m_currentCheckpoint = targetCheckpoint;
 			PlayLayer::loadFromCheckpoint(targetCheckpoint);
 			PlayLayer::resetLevel();
-			FMODAudioEngine::get()->resumeAllAudio();
 		}
+		FMODAudioEngine::get()->resumeAllAudio();
 	}
 };
 
